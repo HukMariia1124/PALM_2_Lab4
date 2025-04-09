@@ -32,7 +32,7 @@
                 switch (choiceBlock)
                 {
                     case 1:
-                        //MakscoldSolution.Task_1();
+                        MakscoldSolution.Task_1();
                         break;
                     case 2:
                         MariiaSolution.Task_1();
@@ -41,7 +41,7 @@
                         //Jenlast_Solution.Task_1();
                         break;
                     case 4:
-                        //MakscoldSolution.Task_2_Form_10();
+                        MakscoldSolution.Task_2();
                         break;
                     case 5:
                         //MariiaSolution.Task_2_Form_12();
