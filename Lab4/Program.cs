@@ -5,6 +5,7 @@
         public static void Main()
         {
             Console.OutputEncoding = System.Text.Encoding.Unicode;
+            byte choiceBlock;
             do
             {
                 Console.WriteLine(
@@ -27,7 +28,7 @@
                     0) Вийти з програми
                     """);
 
-                byte choiceBlock = Choice(6);
+                choiceBlock = Choice(9);
 
                 switch (choiceBlock)
                 {
@@ -44,7 +45,7 @@
                         //MakscoldSolution.Task_2_Form_10();
                         break;
                     case 5:
-                        //MariiaSolution.Task_2_Form_12();
+                        MariiaSolution.Task_2_Form_12();
                         break;
                     case 6:
                         //Jenlast_Solution.Task_2_Form_7();
@@ -58,13 +59,15 @@
                     case 9:
                         //Jenlast_Solution.Additional();
                         break;
+                    case 0:
+                        break;
                     default:
                         ShowProblemMessage();
                         break;
                 }
-            } while (true);
+            } while (choiceBlock!=0);
         }
-        public static byte Choice(byte countOfBlocks = 6)
+        public static byte Choice(byte countOfBlocks = 9)
         {
             byte choice;
             do

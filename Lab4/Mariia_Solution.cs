@@ -106,5 +106,48 @@ namespace Lab4
             }
             Console.WriteLine(res);
         }
+
+
+        public static void Task_2_Form_12()
+        {
+            do
+            {
+                Console.WriteLine(
+                    """
+                    ------------------------------------------------------------------------------------------------------------------------
+                                                                          ВИБІР ВЕРСІЇ
+                    ------------------------------------------------------------------------------------------------------------------------
+                    1) Шифрування шифром Цезаря.
+                    2) Дешифрування шифром Цезаря.
+                    0) Повернутися назад в меню.
+                    """);
+
+                byte choiceBlock = Program.Choice(2);
+
+                switch (choiceBlock)
+                {
+                    case 1:
+                        Task_2_Encryption();
+                        break;
+                    case 2:
+                        Task_2_Deciphering();
+                        break;
+                    case 0:
+                        Program.Main();
+                        break;
+                    default:
+                        Program.ShowProblemMessage();
+                        break;
+                }
+            } while (true);
+        }
+        static void Task_2_Encryption()
+        {
+
+        }
+        static void Task_2_Deciphering()
+        {
+
+        }
     }
 }
