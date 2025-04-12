@@ -127,10 +127,10 @@ namespace Lab4
                 switch (choiceBlock)
                 {
                     case 1:
-                        Task_2_Encryption(ref data);
+                        Task_2_CaesarCipher(ref data, true);
                         break;
                     case 2:
-                        Task_2_Deciphering();
+                        Task_2_CaesarCipher(ref data, false);
                         break;
                     case 0:
                         return data;
@@ -140,25 +140,56 @@ namespace Lab4
                 }
             } while (true);
         }
-        static void Task_2_Encryption(ref StringBuilder data)
+        static void Task_2_CaesarCipher(ref StringBuilder data, bool Encrypt)
         {
-            string template = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            bool remove = DeleteOrNot();
+            Console.WriteLine("Введіть ключ:");
+            int shift = int.Parse(Console.ReadLine()!);
+            const string template = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
             Console.WriteLine($"Текст до шифрування: {data}");
             for (int i = 0; i < data.Length; i++)
             {
                 int index = template.IndexOf(data[i]);
                 if (index != -1)
                 {
-                    if (index < 49) data[i] = template[index + 3];
-                    else data[i] = template[index - 49];
+                    if (Encrypt)
+                    {
+                        if (index < 26 && index + shift>=0) data[i] = template[(index + shift) % 26];
+                        else data[i] = template[(index + shift) % 26 + 26];
+                    }
+                    else
+                    {
+                        if (index < 26 && index - shift >= 0) data[i] = template[(index - shift) % 26];
+                        else data[i] = template[(index - shift) % 26 + 26];
+                    }
                 }
-                else data.Remove(i--, 1);
+                else if (remove == true) data.Remove(i--, 1);
             }
             Console.WriteLine($"Текст після шифрування: {data}");
         }
-        static void Task_2_Deciphering()
+        static bool DeleteOrNot()
         {
+            do
+            {
+                Console.WriteLine(
+                    """
+                    Видаляти символм, які не є буквами латинського алфавіту?
+                    1) Так.
+                    2) Ні.
+                    """);
+                byte choiceBlock = Program.Choice(2);
 
+                switch (choiceBlock)
+                {
+                    case 1:
+                        return true;
+                    case 2:
+                        return false;
+                    default:
+                        Program.ShowProblemMessage();
+                        break;
+                }
+            } while (true);
         }
     }
 }
