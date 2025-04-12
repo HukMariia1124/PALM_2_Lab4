@@ -59,7 +59,7 @@ namespace Lab4
                         //MakscoldSolution.Additional();
                         break;
                     case 8:
-                        //MariiaSolution.Additional();
+                        data = MariiaSolution.Additional(ref data);
                         break;
                     case 9:
                         //Jenlast_Solution.Additional();
