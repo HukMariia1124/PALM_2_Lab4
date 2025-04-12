@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.Text;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -77,7 +78,7 @@ namespace Lab4
             {
                 res += i.ToString() + " ";
             }
-            Console.WriteLine(res);
+            //Console.WriteLine(res);
         }
         static void Task_1_Version_2(uint n)
         {
@@ -86,7 +87,7 @@ namespace Lab4
             {
                 res = i.ToString() + " " + res;
             }
-            Console.WriteLine(res);
+            //Console.WriteLine(res);
         }
         static void Task_1_Version_3(uint n)
         {
@@ -95,7 +96,7 @@ namespace Lab4
             {
                 res.Append(i.ToString() + " ");
             }
-            Console.WriteLine(res);
+            //Console.WriteLine(res);
         }
         static void Task_1_Version_4(uint n)
         {
@@ -104,7 +105,7 @@ namespace Lab4
             {
                 res.Insert(0, i.ToString() + " ");
             }
-            Console.WriteLine(res);
+            //Console.WriteLine(res);
         }
 
 
@@ -173,7 +174,7 @@ namespace Lab4
             {
                 Console.WriteLine(
                     """
-                    Видаляти символм, які не є буквами латинського алфавіту?
+                    Видаляти символи, які не є буквами латинського алфавіту?
                     1) Так.
                     2) Ні.
                     """);
@@ -190,6 +191,55 @@ namespace Lab4
                         break;
                 }
             } while (true);
+        }
+        public static StringBuilder Additional(ref StringBuilder data)
+        {
+            do
+            {
+                Program.AskForNewString(ref data);
+                Console.WriteLine(
+                    """
+                    ------------------------------------------------------------------------------------------------------------------------
+                                                                    ВИБІР ДОДАТКОВОЇ ЗАДАЧІ
+                    ------------------------------------------------------------------------------------------------------------------------
+                    1) Перевірити, чи правильно в рядку розставлені круглі дужки.
+                    2) 
+                    3) 
+                    0) Повернутися назад в меню.
+                    """);
+                byte choiceBlock = Program.Choice(2);
+
+                switch (choiceBlock)
+                {
+                    case 1:
+                        Additional_1(ref data);
+                        break;
+                    case 2:
+                        //Additional_2(ref data);
+                        break;
+                    case 3:
+                        //Additional_3(ref data);
+                        break;
+                    case 0:
+                        return data;
+                    default:
+                        Program.ShowProblemMessage();
+                        break;
+                }
+            } while (true);
+        }
+        static void Additional_1(ref StringBuilder data)
+        {
+            int cnt = 0;
+            foreach (char i in data.ToString())
+            {
+                if (i == '(') cnt++;
+                else if (i == ')') cnt--;
+                if (cnt < 0) break;
+            }
+            if (!data.ToString().Contains('(') && !data.ToString().Contains(')')) Console.WriteLine("У рядку немає дужок!");
+            else if (cnt != 0) Console.WriteLine("Дужки розставлені НЕ правильно!");
+            else Console.WriteLine("Дужки розставлені правильно!");
         }
     }
 }
