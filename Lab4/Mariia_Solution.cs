@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Lab4
 {
@@ -61,8 +62,7 @@ namespace Lab4
                         sw.Stop();
                         break;
                     case 0:
-                        Program.Main();
-                        break;
+                        return;
                     default:
                         Program.ShowProblemMessage();
                         break;
@@ -108,10 +108,11 @@ namespace Lab4
         }
 
 
-        public static void Task_2_Form_12()
+        public static StringBuilder Task_2_Form_12(ref StringBuilder data)
         {
             do
             {
+                Program.AskForNewString(ref data);
                 Console.WriteLine(
                     """
                     ------------------------------------------------------------------------------------------------------------------------
@@ -121,29 +122,39 @@ namespace Lab4
                     2) Дешифрування шифром Цезаря.
                     0) Повернутися назад в меню.
                     """);
-
                 byte choiceBlock = Program.Choice(2);
 
                 switch (choiceBlock)
                 {
                     case 1:
-                        Task_2_Encryption();
+                        Task_2_Encryption(ref data);
                         break;
                     case 2:
                         Task_2_Deciphering();
                         break;
                     case 0:
-                        Program.Main();
-                        break;
+                        return data;
                     default:
                         Program.ShowProblemMessage();
                         break;
                 }
             } while (true);
         }
-        static void Task_2_Encryption()
+        static void Task_2_Encryption(ref StringBuilder data)
         {
-
+            string template = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            Console.WriteLine($"Текст до шифрування: {data}");
+            for (int i = 0; i < data.Length; i++)
+            {
+                int index = template.IndexOf(data[i]);
+                if (index != -1)
+                {
+                    if (index < 49) data[i] = template[index + 3];
+                    else data[i] = template[index - 49];
+                }
+                else data.Remove(i--, 1);
+            }
+            Console.WriteLine($"Текст після шифрування: {data}");
         }
         static void Task_2_Deciphering()
         {
