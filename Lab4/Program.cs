@@ -1,11 +1,16 @@
-﻿namespace Lab4
+﻿using System.Data.Common;
+using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace Lab4
 {
     internal class Program
     {
-        public static void Main()
+        static void Main()
         {
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             byte choiceBlock;
+            StringBuilder data = new StringBuilder();
             do
             {
                 Console.WriteLine(
@@ -45,7 +50,7 @@
                         //MakscoldSolution.Task_2_Form_10();
                         break;
                     case 5:
-                        MariiaSolution.Task_2_Form_12();
+                        data = MariiaSolution.Task_2_Form_12(ref data);
                         break;
                     case 6:
                         //Jenlast_Solution.Task_2_Form_7();
@@ -82,5 +87,49 @@
             } while (true);
         }
         public static void ShowProblemMessage() => Console.WriteLine("Спробуйте ще раз");
+        public static void AskForNewString(ref StringBuilder data)
+        {
+            if (data.Length != 0)
+            {
+                Console.WriteLine(
+                    $"""
+                    Ваш рядок зараз: {data}
+                    Ввести новий?
+                    1) Так
+                    2) Ні
+                    """);
+
+                do
+                {
+                    try
+                    {
+                        byte input = byte.Parse(Console.ReadLine()!);
+                        if (input == 1)
+                        {
+                            InputNewString(ref data);
+                            return;
+                        }
+                        else if (input == 2) return;
+                        else ShowProblemMessage();
+                    }
+                    catch
+                    {
+                        ShowProblemMessage();
+                    }
+                }
+                while (true);
+            }
+            else
+            {
+                InputNewString(ref data);
+                return;
+            }
+        }
+        public static void InputNewString(ref StringBuilder data)
+        {
+            data.Clear();
+            Console.WriteLine("Введіть новий рядок:");
+            data.Append(Console.ReadLine());
+        }
     }
 }
