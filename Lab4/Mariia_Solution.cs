@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Text;
+using System.Text.RegularExpressions;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Lab4
@@ -192,6 +193,8 @@ namespace Lab4
                 }
             } while (true);
         }
+
+
         public static StringBuilder Additional(ref StringBuilder data)
         {
             do
@@ -207,7 +210,7 @@ namespace Lab4
                     3) 
                     0) Повернутися назад в меню.
                     """);
-                byte choiceBlock = Program.Choice(2);
+                byte choiceBlock = Program.Choice(3);
 
                 switch (choiceBlock)
                 {
@@ -215,7 +218,7 @@ namespace Lab4
                         Additional_1(ref data);
                         break;
                     case 2:
-                        //Additional_2(ref data);
+                        Additional_2(ref data);
                         break;
                     case 3:
                         //Additional_3(ref data);
@@ -240,6 +243,55 @@ namespace Lab4
             if (!data.ToString().Contains('(') && !data.ToString().Contains(')')) Console.WriteLine("У рядку немає дужок!");
             else if (cnt != 0) Console.WriteLine("Дужки розставлені НЕ правильно!");
             else Console.WriteLine("Дужки розставлені правильно!");
+        }
+        static void Additional_2(ref StringBuilder data)
+        {
+            do
+            {
+                Console.WriteLine(
+                    """
+                    ------------------------------------------------------------------------------------------------------------------------
+                                                                    ВИБІР ВАРІАНТУ ВИКОНАННЯ
+                    ------------------------------------------------------------------------------------------------------------------------
+                    1) За допомогою регулярних виразів.
+                    2) Вручну, без використання регулярних виразів.
+                    """);
+                byte choiceBlock = Program.Choice(2);
+
+                switch (choiceBlock)
+                {
+                    case 1:
+                        WithRegex(ref data);
+                        return;
+                    case 2:
+                        //WithoutRegex(ref data);
+                        return;
+                    default:
+                        Program.ShowProblemMessage();
+                        break;
+                }
+            } while (true);
+        }
+        static void WithRegex(ref StringBuilder data)
+        {
+            string[] words = data.ToString().Split();
+            Console.WriteLine("Введіть шаблон:");
+            StringBuilder pattern = new StringBuilder(Console.ReadLine()!);
+            pattern.Replace('?', '.');
+            pattern.Replace("*", ".*");
+            pattern.Insert(0, "^");
+            pattern.Insert(pattern.Length, "$");
+            Regex regex = new Regex(pattern.ToString());
+            List<string> matchingWords = new List<string>();
+            foreach (string word in words)
+            {
+                if (regex.IsMatch(word))
+                {
+                    matchingWords.Add(word);
+                }
+            }
+            if (matchingWords.Count == 0) Console.WriteLine("В рядку немає слів, які задовольняють шаблон!");
+            else Console.WriteLine(string.Join(" ", matchingWords));
         }
     }
 }
