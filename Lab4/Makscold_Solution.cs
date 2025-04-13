@@ -68,24 +68,48 @@ namespace Lab4
                         Program.ShowProblemMessage();
                         break;
                 }
-                Console.WriteLine(sw);
+                Console.WriteLine($"Час виконання {sw}");
             } while (true);
         }
         static void Task_1_Version_1(uint n)
         {
-            
+            string str = "1";
+
+            for (int i = 2; i <= n; i++)
+            {
+                str += $" {i}";
+            }
+
+            Console.WriteLine(str);
         }
         static void Task_1_Version_2(uint n)
         {
-            
+            string str = $"{n}";
+
+            for (uint i = n-1; i > 0; i--)
+            {
+                str = $"{i} " + str;
+            }
+            Console.WriteLine(str);
         }
         static void Task_1_Version_3(uint n)
         {
-            
+            var str = new StringBuilder("1");
+            for (int i = 2; i <= n; i++)
+            {
+                str.Append($" {i}");
+            }
+
+            Console.WriteLine(str);
         }
         static void Task_1_Version_4(uint n)
         {
-
+            var str = new StringBuilder($"{n}");
+            for (uint i = n - 1; i > 0; i--)
+            {
+                str.Insert(0,$"{i} ");
+            }
+            Console.WriteLine(str);
         }
         public static void Task_2()
         {/* Відомо, що у рядку є латинські (англійські) букви і цифри. Перетворити рядок так, щоб спочатку
@@ -133,6 +157,61 @@ namespace Lab4
                 else i--;
             }
         }
+        public static void Task_3()
+        {
+            do
+            {
+                Console.WriteLine(
+                    """
+                    ------------------------------------------------------------------------------------------------------------------------
+                                                                          ВИБІР ВЕРСІЇ
+                    ------------------------------------------------------------------------------------------------------------------------
+                    1) Перевірити, чи правильно в ньому розставлені круглі дужки.
+                    2) 
+                    3) 
+                    0) Повернутися назад в меню.
+                    """);
 
+
+
+                byte choiceBlock = Program.Choice(3);
+
+                Console.WriteLine($"Введіть рядок");
+                var str = Console.ReadLine();
+
+                switch (choiceBlock)
+                {
+                    case 1:
+                        Task_3_Version_1(str);
+                        break;
+                    case 2:
+                        Task_3_Version_2(str);
+                        break;
+                    case 3:
+                        Task_3_Version_3(str);
+                        break;
+                    case 0:
+                        Program.Main();
+                        break;
+                    default:
+                        Program.ShowProblemMessage();
+                        break;
+                }
+            } while (true);
+        }
+
+
+        static void Task_3_Version_1(string str)
+        {
+
+        }
+        static void Task_3_Version_2(string str)
+        {
+
+        }
+        static void Task_3_Version_3(string str)
+        {
+
+        }
     }
 }

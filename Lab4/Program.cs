@@ -27,7 +27,7 @@
                     0) Вийти з програми
                     """);
 
-                byte choiceBlock = Choice(6);
+                byte choiceBlock = Choice(9);
 
                 switch (choiceBlock)
                 {
@@ -50,7 +50,7 @@
                         //Jenlast_Solution.Task_2_Form_7();
                         break;
                     case 7:
-                        //MakscoldSolution.Additional();
+                        MakscoldSolution.Task_3();
                         break;
                     case 8:
                         //MariiaSolution.Additional();
