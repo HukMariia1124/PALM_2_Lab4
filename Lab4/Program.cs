@@ -9,6 +9,7 @@ namespace Lab4
         static void Main()
         {
             Console.OutputEncoding = System.Text.Encoding.Unicode;
+            Console.InputEncoding = System.Text.Encoding.Unicode;
             byte choiceBlock;
             StringBuilder data = new StringBuilder();
             do
