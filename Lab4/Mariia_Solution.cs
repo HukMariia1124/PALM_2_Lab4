@@ -264,7 +264,7 @@ namespace Lab4
                         WithRegex(ref data);
                         return;
                     case 2:
-                        //WithoutRegex(ref data);
+                        WithoutRegex(ref data);
                         return;
                     default:
                         Program.ShowProblemMessage();
@@ -292,6 +292,63 @@ namespace Lab4
             }
             if (matchingWords.Count == 0) Console.WriteLine("В рядку немає слів, які задовольняють шаблон!");
             else Console.WriteLine(string.Join(" ", matchingWords));
+        }
+        static void WithoutRegex(ref StringBuilder data)
+        {
+            string[] words = data.ToString().Split();
+            Console.WriteLine("Введіть шаблон:");
+            string pattern = Console.ReadLine()!;
+            List<string> matchingWords = new List<string>();
+
+            foreach (string word in words)
+            {
+                int wIndex = 0, pIndex = 0;
+                bool isMatch = true;
+
+                while (wIndex < word.Length && pIndex < pattern.Length)
+                {
+                    if (pattern[pIndex] == '?')
+                    {
+                        wIndex++;
+                        pIndex++;
+                    }
+                    else if (pattern[pIndex] == '*')
+                    {
+                        if (pIndex == pattern.Length - 1)
+                        {
+                            wIndex = word.Length; // Match the rest of the word
+                        }
+                        else
+                        {
+                            pIndex++;
+                            while (wIndex < word.Length && word[wIndex] != pattern[pIndex])
+                            {
+                                wIndex++;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (word[wIndex] != pattern[pIndex])
+                        {
+                            isMatch = false;
+                            break;
+                        }
+                        wIndex++;
+                        pIndex++;
+                    }
+                }
+
+                if (isMatch && wIndex == word.Length && (pIndex == pattern.Length || (pIndex == pattern.Length - 1 && pattern[pIndex] == '*')))
+                {
+                    matchingWords.Add(word);
+                }
+            }
+
+            if (matchingWords.Count == 0)
+                Console.WriteLine("В рядку немає слів, які задовольняють шаблон!");
+            else
+                Console.WriteLine(string.Join(" ", matchingWords));
         }
     }
 }
