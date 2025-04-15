@@ -116,8 +116,6 @@ namespace Lab4
             розміщувалися цифри у прямому порядку, а потім літери у зворотному порядку. Якщо рядок містив
             також інші символи(не букви й не цифри), їх слід пропустити(видалити).*/
 
-            // 5bA4 => 54AB
-
             Console.WriteLine($"Введіть рядок");
             var str = new StringBuilder(Console.ReadLine());
 
@@ -167,8 +165,8 @@ namespace Lab4
                                                                           ВИБІР ВЕРСІЇ
                     ------------------------------------------------------------------------------------------------------------------------
                     1) Перевірити, чи правильно в ньому розставлені круглі дужки.
-                    2) 
-                    3) 
+                    2) Перевірити рядок на шаблон
+                    3) ---
                     0) Повернутися назад в меню.
                     """);
 
@@ -199,18 +197,136 @@ namespace Lab4
                 }
             } while (true);
         }
-
-
         static void Task_3_Version_1(string str)
         {
+            //Перевірити, чи правильно розставлені круглі дужки.
+            int count = 0;
+            bool result = true;
+            foreach (char c in str)
+            {
+                if (c == '(') count++;
+                else if (c == ')') count--;
 
+                if (count == -1)
+                {
+                    result = false;
+                    break;
+                }
+            }
+
+            if (count != 0) result = false;
+            Console.WriteLine(result);
         }
         static void Task_3_Version_2(string str)
         {
+            string[] words = str.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+
+            Console.WriteLine("Введіть шаблон");
+
+            string patern = Console.ReadLine();
+
+            string result = "";
+
+            for (int i = 0; i < words.Length; i++)
+            {
+
+                bool flag = true;
+                int wordIndex = 0;
+                int paternIndex = 0;
+                int starIndex = -1;
+                int wordTemp = -1;
+
+                while (wordIndex < words[i].Length)
+                {
+                    if (paternIndex < patern.Length && (patern[paternIndex] == words[i][wordIndex] || patern[paternIndex] == '?'))
+                    {
+                        wordIndex++;
+                        paternIndex++;
+                    }
+                    else if (paternIndex < patern.Length && patern[paternIndex] == '*')
+                    {
+                        starIndex = paternIndex;
+                        wordTemp = wordIndex;
+                        paternIndex++;
+                    }
+                    else if (starIndex != -1)
+                    {
+                        paternIndex = starIndex + 1;
+                        wordTemp++;
+                        wordIndex = wordTemp;
+                    }
+                    else
+                    {
+                        flag = false;
+                        break;
+                    }
+                }
+
+                while (paternIndex < patern.Length && patern[paternIndex] == '*')
+                {
+                    paternIndex++;
+                }
+
+                if (flag && paternIndex == patern.Length)
+                {
+                    result += " " + words[i];
+                }
+            }
+
+            Console.WriteLine("Слова, які підходять під шаблон:");
+            Console.WriteLine(String.Join(' ', result));
 
         }
         static void Task_3_Version_3(string str)
         {
+            Program.ShowProblemMessage(); return;
+
+            /*string[] words = str.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+
+
+
+
+            for (int i = 0; i < words.Length; i++)
+            {
+                if (words[i] == "м" && i != 0)
+                {
+                    words[i - 1] = Meter(words[i - 1]);
+                }
+                if (words[i] == "грн" && i != 0)
+                {
+                    words[i - 1] = Hryvnia(words[i - 1]);
+                }
+            }
+
+            static string Meter(string str)
+            {
+                try
+                {
+                    int number = int.Parse(str);
+                }
+                catch { return str; }
+                string result = "";
+
+                for (int i = str.Length - 1; i > 0; i--)
+                {
+
+                }
+
+                return result;
+            }
+            static string Hryvnia(string str)
+            {
+                try
+                {
+                    int number = int.Parse(str);
+                }
+                catch { return str; }
+                string result = "";
+
+
+
+                return result;
+            }*/
 
         }
     }
