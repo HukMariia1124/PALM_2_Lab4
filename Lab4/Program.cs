@@ -34,12 +34,12 @@ namespace Lab4
                     0) Вийти з програми
                     """);
 
-                choiceBlock = Choice(9);
+                byte choiceBlock = Choice(9);
 
                 switch (choiceBlock)
                 {
                     case 1:
-                        //MakscoldSolution.Task_1();
+                        MakscoldSolution.Task_1();
                         break;
                     case 2:
                         MariiaSolution.Task_1();
@@ -48,7 +48,7 @@ namespace Lab4
                         //Jenlast_Solution.Task_1();
                         break;
                     case 4:
-                        //MakscoldSolution.Task_2_Form_10();
+                        MakscoldSolution.Task_2();
                         break;
                     case 5:
                         data = MariiaSolution.Task_2_Form_12(ref data);
@@ -57,7 +57,7 @@ namespace Lab4
                         //Jenlast_Solution.Task_2_Form_7();
                         break;
                     case 7:
-                        //MakscoldSolution.Additional();
+                        MakscoldSolution.Task_3();
                         break;
                     case 8:
                         data = MariiaSolution.Additional(ref data);
