@@ -156,7 +156,7 @@ namespace Lab4
                 {
                     if (Encrypt)
                     {
-                        if (index < 26 && index + shift>=0) data[i] = template[(index + shift) % 26];
+                        if (index < 26 && index + shift >= 0) data[i] = template[(index + shift) % 26];
                         else data[i] = template[(index + shift) % 26 + 26];
                     }
                     else
@@ -206,8 +206,8 @@ namespace Lab4
                                                                     ВИБІР ДОДАТКОВОЇ ЗАДАЧІ
                     ------------------------------------------------------------------------------------------------------------------------
                     1) Перевірити, чи правильно в рядку розставлені круглі дужки.
-                    2) 
-                    3) 
+                    2) Знайдіть у рядку слова, що відповідають заданому шаблону, де '?' - будь-який один символ, а '*' — будь-який підрядок.
+                    3) Замініть у рядку числа перед "м", "грн" на їх словесний еквівалент, узгодивши рід числівника та форму одиниці виміру.
                     0) Повернутися назад в меню.
                     """);
                 byte choiceBlock = Program.Choice(3);
@@ -316,7 +316,7 @@ namespace Lab4
                     {
                         if (pIndex == pattern.Length - 1)
                         {
-                            wIndex = word.Length; // Match the rest of the word
+                            wIndex = word.Length;
                         }
                         else
                         {
