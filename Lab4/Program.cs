@@ -28,6 +28,7 @@
                     """);
 
                 byte choiceBlock = Choice(6);
+                if (choiceBlock == 0) return;
 
                 switch (choiceBlock)
                 {
@@ -47,7 +48,7 @@
                         //MariiaSolution.Task_2_Form_12();
                         break;
                     case 6:
-                        //Jenlast_Solution.Task_2_Form_7();
+                        Jenlast_Solution.Task_2_Form_7();
                         break;
                     case 7:
                         //MakscoldSolution.Additional();
