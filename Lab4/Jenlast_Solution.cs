@@ -66,8 +66,7 @@ namespace Lab4
                         sw.Stop();
                         break;
                     case 0:
-                        Program.Main();
-                        break;
+                        return;
                     default:
                         Program.ShowProblemMessage();
                         break;
@@ -137,8 +136,7 @@ namespace Lab4
                         Task_2_Version_2(ref data);
                         break;
                     case 0:
-                        Program.Main();
-                        break;
+                        return;
                     default:
                         Program.ShowProblemMessage();
                         break;
