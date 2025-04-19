@@ -71,7 +71,7 @@ namespace Lab4
                         ShowProblemMessage();
                         break;
                 }
-            } while (choiceBlock != 0);
+            } while (choiceBlock!= 0);
         }
         public static byte Choice(byte countOfBlocks = 9)
         {
