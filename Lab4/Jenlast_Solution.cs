@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Lab4
 {
@@ -110,10 +111,11 @@ namespace Lab4
             }
             Console.WriteLine(str);
         }
-        public static void Task_2_Form_7()
+        public static void Task_2_Form_7(ref StringBuilder data)
         {
             do
             {
+                Program.AskForNewString(ref data);
                 Console.WriteLine(
                     """
                     ------------------------------------------------------------------------------------------------------------------------
@@ -129,10 +131,10 @@ namespace Lab4
                 switch (choiceBlock)
                 {
                     case 1:
-                        Task_2_Version_1();
+                        Task_2_Version_1(ref data);
                         break;
                     case 2:
-                        Task_2_Version_2();
+                        Task_2_Version_2(ref data);
                         break;
                     case 0:
                         Program.Main();
@@ -143,10 +145,9 @@ namespace Lab4
                 }
             } while (true);
         }
-        static void Task_2_Version_1()
+        static void Task_2_Version_1(ref StringBuilder data)
         {
-            Console.WriteLine("Введіть вираз");
-            string str = Console.ReadLine();
+            string str = data.ToString();
             string res = "";
 
             for (int i = 0; i < str.Length; i++)
@@ -166,12 +167,11 @@ namespace Lab4
             }
             if (str == res)
                 Console.WriteLine("У виразі німа непарних цифр, які стоять перед знаком +");
-            Console.WriteLine(res);
+            data = new StringBuilder(res);
         }
-        static void Task_2_Version_2()
+        static void Task_2_Version_2(ref StringBuilder data)
         {
-            string str = Console.ReadLine();
-            var sb = new StringBuilder(str);
+            string str = data.ToString();
 
             for (int i = 0; i < str.Length; i++)
             {
@@ -180,15 +180,14 @@ namespace Lab4
                     int digit = int.Parse(str[i - 1].ToString());
                     if (digit % 2 != 0)
                     {
-                        sb.Remove(i, 1);
-                        sb.Insert(i, '-');
+                        data.Remove(i, 1);
+                        data.Insert(i, '-');
                     }
                 }
             }
-            bool comparing = str.Equals(sb.ToString());
+            bool comparing = str.Equals(data.ToString());
             if (comparing)
                 Console.WriteLine("У виразі німа непарних цифр, які стоять перед знаком +");
-            Console.WriteLine(sb.ToString());
         }
         public static void Additional()
         {
