@@ -1,10 +1,17 @@
-﻿namespace Lab4
+﻿using System.Data.Common;
+using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace Lab4
 {
     internal class Program
     {
-        public static void Main()
+        static void Main()
         {
             Console.OutputEncoding = System.Text.Encoding.Unicode;
+            Console.InputEncoding = System.Text.Encoding.Unicode;
+            byte choiceBlock;
+            StringBuilder data = new StringBuilder();
             do
             {
                 Console.WriteLine(
@@ -27,13 +34,12 @@
                     0) Вийти з програми
                     """);
 
-                byte choiceBlock = Choice(6);
-                if (choiceBlock == 0) return;
+                byte choiceBlock = Choice(9);
 
                 switch (choiceBlock)
                 {
                     case 1:
-                        //MakscoldSolution.Task_1();
+                        MakscoldSolution.Task_1();
                         break;
                     case 2:
                         MariiaSolution.Task_1();
@@ -42,30 +48,32 @@
                         //Jenlast_Solution.Task_1();
                         break;
                     case 4:
-                        //MakscoldSolution.Task_2_Form_10();
+                        MakscoldSolution.Task_2();
                         break;
                     case 5:
-                        //MariiaSolution.Task_2_Form_12();
+                        data = MariiaSolution.Task_2_Form_12(ref data);
                         break;
                     case 6:
-                        Jenlast_Solution.Task_2_Form_7();
+                        //Jenlast_Solution.Task_2_Form_7();
                         break;
                     case 7:
-                        //MakscoldSolution.Additional();
+                        MakscoldSolution.Task_3();
                         break;
                     case 8:
-                        //MariiaSolution.Additional();
+                        data = MariiaSolution.Additional(ref data);
                         break;
                     case 9:
                         //Jenlast_Solution.Additional();
+                        break;
+                    case 0:
                         break;
                     default:
                         ShowProblemMessage();
                         break;
                 }
-            } while (true);
+            } while (choiceBlock != 0);
         }
-        public static byte Choice(byte countOfBlocks = 6)
+        public static byte Choice(byte countOfBlocks = 9)
         {
             byte choice;
             do
@@ -80,5 +88,49 @@
             } while (true);
         }
         public static void ShowProblemMessage() => Console.WriteLine("Спробуйте ще раз");
+        public static void AskForNewString(ref StringBuilder data)
+        {
+            if (data.Length != 0)
+            {
+                Console.WriteLine(
+                    $"""
+                    Ваш рядок зараз: {data}
+                    Ввести новий?
+                    1) Так
+                    2) Ні
+                    """);
+
+                do
+                {
+                    try
+                    {
+                        byte input = byte.Parse(Console.ReadLine()!);
+                        if (input == 1)
+                        {
+                            InputNewString(ref data);
+                            return;
+                        }
+                        else if (input == 2) return;
+                        else ShowProblemMessage();
+                    }
+                    catch
+                    {
+                        ShowProblemMessage();
+                    }
+                }
+                while (true);
+            }
+            else
+            {
+                InputNewString(ref data);
+                return;
+            }
+        }
+        public static void InputNewString(ref StringBuilder data)
+        {
+            data.Clear();
+            Console.WriteLine("Введіть новий рядок:");
+            data.Append(Console.ReadLine());
+        }
     }
 }
