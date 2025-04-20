@@ -145,8 +145,7 @@ namespace Lab4
         static void Task_2_CaesarCipher(ref StringBuilder data, bool Encrypt)
         {
             bool remove = DeleteOrNot();
-            Console.WriteLine("Введіть ключ:");
-            int shift = int.Parse(Console.ReadLine()!);
+            int shift = Shift();
             const string template = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
             Console.WriteLine($"Текст до шифрування: {data}");
             for (int i = 0; i < data.Length; i++)
@@ -190,6 +189,23 @@ namespace Lab4
                     default:
                         Program.ShowProblemMessage();
                         break;
+                }
+            } while (true);
+        }
+        static int Shift()
+        {
+            int shift;
+            Console.WriteLine("Введіть ключ:");
+            do
+            {
+                try
+                {
+                    shift = int.Parse(Console.ReadLine()!);
+                    return shift;
+                }
+                catch
+                {
+                    Program.ShowProblemMessage();
                 }
             } while (true);
         }

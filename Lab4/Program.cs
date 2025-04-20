@@ -51,7 +51,7 @@ namespace Lab4
                         MakscoldSolution.Task_2();
                         break;
                     case 5:
-                        data = MariiaSolution.Task_2_Form_12(ref data);
+                        MariiaSolution.Task_2_Form_12(ref data);
                         break;
                     case 6:
                         Jenlast_Solution.Task_2_Form_7(ref data);
@@ -60,7 +60,7 @@ namespace Lab4
                         MakscoldSolution.Task_3();
                         break;
                     case 8:
-                        data = MariiaSolution.Additional(ref data);
+                        MariiaSolution.Additional(ref data);
                         break;
                     case 9:
                         //Jenlast_Solution.Additional();
