@@ -39,25 +39,25 @@ namespace Lab4
                 switch (choiceBlock)
                 {
                     case 1:
-                        //MakscoldSolution.Task_1();
+                        MakscoldSolution.Task_1();
                         break;
                     case 2:
                         MariiaSolution.Task_1();
                         break;
                     case 3:
-                        //Jenlast_Solution.Task_1();
+                        Jenlast_Solution.Task_1();
                         break;
                     case 4:
-                        //MakscoldSolution.Task_2_Form_10();
+                        MakscoldSolution.Task_2();
                         break;
                     case 5:
                         data = MariiaSolution.Task_2_Form_12(ref data);
                         break;
                     case 6:
-                        //Jenlast_Solution.Task_2_Form_7();
+                        Jenlast_Solution.Task_2_Form_7(ref data);
                         break;
                     case 7:
-                        //MakscoldSolution.Additional();
+                        MakscoldSolution.Task_3();
                         break;
                     case 8:
                         data = MariiaSolution.Additional(ref data);
