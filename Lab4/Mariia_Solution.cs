@@ -145,9 +145,9 @@ namespace Lab4
         static void Task_2_CaesarCipher(ref StringBuilder data, bool Encrypt)
         {
             bool remove = DeleteOrNot();
-            Console.WriteLine("Введіть ключ:");
-            int shift = int.Parse(Console.ReadLine()!);
+            int shift = Shift();
             const string template = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            DisplayCipherTemplate(shift, template, Encrypt);
             Console.WriteLine($"Текст до шифрування: {data}");
             for (int i = 0; i < data.Length; i++)
             {
@@ -169,6 +169,26 @@ namespace Lab4
             }
             Console.WriteLine($"Текст після шифрування: {data}");
         }
+
+        private static void DisplayCipherTemplate(int shift, string template, bool Encrypt)
+        {
+            Console.WriteLine("Шаблон шмфрування:");
+            Console.WriteLine("┌" + new string('─', 52) + "┐");
+            Console.WriteLine("|" + template + "|");
+            Console.WriteLine(new string('|', 54));
+            if (Encrypt)
+            {
+                if (shift >= 0) Console.WriteLine("|" + template[shift..] + template[0..shift] + "|");
+                else Console.WriteLine("|" + template.Substring(52 + shift, Math.Abs(shift)) + template.Substring(0, 52 + shift) + "|");
+            }
+            else
+            {
+                if (shift >= 0) Console.WriteLine("|" + template.Substring(52 - shift, Math.Abs(shift)) + template.Substring(0, 52 - shift) + "|");
+                else Console.WriteLine("|" + template[Math.Abs(shift)..] + template[0..Math.Abs(shift)] + "|");
+            }
+            Console.WriteLine("└" + new string('─', 52) + "┘");
+        }
+
         static bool DeleteOrNot()
         {
             do
@@ -190,6 +210,23 @@ namespace Lab4
                     default:
                         Program.ShowProblemMessage();
                         break;
+                }
+            } while (true);
+        }
+        static int Shift()
+        {
+            int shift;
+            Console.WriteLine("Введіть ключ:");
+            do
+            {
+                try
+                {
+                    shift = int.Parse(Console.ReadLine()!);
+                    return shift;
+                }
+                catch
+                {
+                    Program.ShowProblemMessage();
                 }
             } while (true);
         }
