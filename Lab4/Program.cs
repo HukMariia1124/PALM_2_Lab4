@@ -45,25 +45,25 @@ namespace Lab4
                         MariiaSolution.Task_1();
                         break;
                     case 3:
-                        //Jenlast_Solution.Task_1();
+                        Jenlast_Solution.Task_1();
                         break;
                     case 4:
                         data = MakscoldSolution.Task_2(ref data);
                         break;
                     case 5:
-                        data = MariiaSolution.Task_2_Form_12(ref data);
+                        MariiaSolution.Task_2_Form_12(ref data);
                         break;
                     case 6:
-                        //Jenlast_Solution.Task_2_Form_7();
+                        Jenlast_Solution.Task_2_Form_7(ref data);
                         break;
                     case 7:
                         data = MakscoldSolution.Task_3(ref data);
                         break;
                     case 8:
-                        data = MariiaSolution.Additional(ref data);
+                        MariiaSolution.Additional(ref data);
                         break;
                     case 9:
-                        //Jenlast_Solution.Additional();
+                        Jenlast_Solution.Additional(ref data);
                         break;
                     case 0:
                         break;

@@ -281,54 +281,6 @@ namespace Lab4
         static void Task_3_Version_3(StringBuilder str)
         {
             Program.ShowProblemMessage(); return;
-
-            /*string[] words = str.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-
-
-
-
-            for (int i = 0; i < words.Length; i++)
-            {
-                if (words[i] == "м" && i != 0)
-                {
-                    words[i - 1] = Meter(words[i - 1]);
-                }
-                if (words[i] == "грн" && i != 0)
-                {
-                    words[i - 1] = Hryvnia(words[i - 1]);
-                }
-            }
-
-            static string Meter(string str)
-            {
-                try
-                {
-                    int number = int.Parse(str);
-                }
-                catch { return str; }
-                string result = "";
-
-                for (int i = str.Length - 1; i > 0; i--)
-                {
-
-                }
-
-                return result;
-            }
-            static string Hryvnia(string str)
-            {
-                try
-                {
-                    int number = int.Parse(str);
-                }
-                catch { return str; }
-                string result = "";
-
-
-
-                return result;
-            }*/
-
         }
     }
 }
