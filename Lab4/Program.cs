@@ -63,7 +63,7 @@ namespace Lab4
                         MariiaSolution.Additional(ref data);
                         break;
                     case 9:
-                        //Jenlast_Solution.Additional();
+                        Jenlast_Solution.Additional(ref data);
                         break;
                     case 0:
                         break;

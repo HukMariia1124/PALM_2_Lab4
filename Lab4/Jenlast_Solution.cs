@@ -187,9 +187,31 @@ namespace Lab4
             if (comparing)
                 Console.WriteLine("У виразі німа непарних цифр, які стоять перед знаком +");
         }
-        public static void Additional()
+        public static void Additional(ref StringBuilder data)
         {
+            Program.AskForNewString(ref data);
+            Console.WriteLine(
+                """
+                ------------------------------------------------------------------------------------------------------------------------
+                                                                ДОДАТКОВА ЗАДАЧА 1
+                ------------------------------------------------------------------------------------------------------------------------
+                Перевірити, чи правильно в рядку розставлені круглі дужки.
 
+                """);
+
+            int cnt = 0;
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                if (data[i] == '(')
+                    cnt++;
+                else if (data[i] == ')')
+                    cnt--;
+                if (cnt < 0) break;
+            }
+            if (!data.ToString().Contains('(') && !data.ToString().Contains(')')) Console.WriteLine("В рядку немає дужок");
+            else if (cnt != 0) Console.WriteLine("Дужки розставлені неправильно");
+            else Console.WriteLine("Дужки розставлені правильно");
         }
     }
 }
