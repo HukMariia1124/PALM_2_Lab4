@@ -128,9 +128,14 @@ namespace Lab4
         }
         public static void InputNewString(ref StringBuilder data)
         {
-            data.Clear();
             Console.WriteLine("Введіть новий рядок:");
-            data.Append(Console.ReadLine());
+            do
+            {
+                data.Clear();
+                data.Append(Console.ReadLine());
+                if (data.ToString() == "") ShowProblemMessage();
+            }
+            while (data.ToString() == "");
         }
     }
 }

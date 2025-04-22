@@ -75,17 +75,17 @@ namespace Lab4
         }
         static void Task_1_Version_1(uint n)
         {
-            string res = "";
-            for (int i = 1; i <= n; i++)
+            string res = "1";
+            for (int i = 2; i <= n; i++)
             {
-                res += i.ToString() + " ";
+                res += " " + i.ToString();
             }
             //Console.WriteLine(res);
         }
         static void Task_1_Version_2(uint n)
         {
-            string res = "";
-            for (uint i = n; i > 0; i--)
+            string res = n.ToString();
+            for (uint i = n-1; i > 0; i--)
             {
                 res = i.ToString() + " " + res;
             }
@@ -93,17 +93,17 @@ namespace Lab4
         }
         static void Task_1_Version_3(uint n)
         {
-            StringBuilder res = new StringBuilder();
-            for (int i = 1; i <= n; i++)
+            StringBuilder res = new StringBuilder("1");
+            for (int i = 2; i <= n; i++)
             {
-                res.Append(i.ToString() + " ");
+                res.Append(" " + i.ToString());
             }
             //Console.WriteLine(res);
         }
         static void Task_1_Version_4(uint n)
         {
-            StringBuilder res = new StringBuilder();
-            for (uint i = n; i > 0; i--)
+            StringBuilder res = new StringBuilder(n.ToString());
+            for (uint i = n-1; i > 0; i--)
             {
                 res.Insert(0, i.ToString() + " ");
             }
@@ -111,7 +111,8 @@ namespace Lab4
         }
 
 
-        public static StringBuilder Task_2_Form_12(ref StringBuilder data)
+
+        public static void Task_2_Form_12(ref StringBuilder data)
         {
             do
             {
@@ -136,7 +137,7 @@ namespace Lab4
                         Task_2_CaesarCipher(ref data, false);
                         break;
                     case 0:
-                        return data;
+                        return;
                     default:
                         Program.ShowProblemMessage();
                         break;
@@ -171,27 +172,39 @@ namespace Lab4
                         else data[i] = template[(index - shift) % 26 + 26];
                     }
                 }
-                else if (remove == true) data.Remove(i--, 1);
+                else if (remove == true && data[i]!=' ') data.Remove(i--, 1);
             }
             Console.WriteLine($"Текст після шифрування: {data}");
         }
 
         private static void DisplayCipherTemplate(int shift, string template, bool Encrypt)
         {
-            Console.WriteLine("Шаблон шмфрування:");
+            Console.WriteLine("Шаблон шифрування:");
             Console.WriteLine("┌" + new string('─', 52) + "┐");
             Console.WriteLine("|" + template + "|");
             Console.WriteLine(new string('|', 54));
             if (Encrypt)
             {
-                if (shift >= 0) Console.WriteLine("|" + template[shift..] + template[0..shift] + "|");
-                else Console.WriteLine("|" + template.Substring(52 + shift, Math.Abs(shift)) + template.Substring(0, 52 + shift) + "|");
+                int adjustedShift = (shift >= 0) ? shift : 26 + shift;
+                Console.WriteLine("|" + template.Substring(adjustedShift, 26 - adjustedShift) + template.Substring(0, adjustedShift) +
+                                  template.Substring(26 + adjustedShift, 26 - adjustedShift) + template.Substring(26, adjustedShift) + "|");
             }
             else
             {
-                if (shift >= 0) Console.WriteLine("|" + template.Substring(52 - shift, Math.Abs(shift)) + template.Substring(0, 52 - shift) + "|");
-                else Console.WriteLine("|" + template[Math.Abs(shift)..] + template[0..Math.Abs(shift)] + "|");
+                int adjustedShift = (shift >= 0) ? 26 - shift : Math.Abs(shift);
+                Console.WriteLine("|" + template.Substring(adjustedShift, 26 - adjustedShift) + template.Substring(0, adjustedShift) +
+                                  template.Substring(52 - adjustedShift, 26 - adjustedShift) + template.Substring(26, adjustedShift) + "|");
             }
+            //if (Encrypt)
+            //{
+            //    if (shift >= 0) Console.WriteLine("|" + template.Substring(shift, 26-shift) + template.Substring(0, shift) + template.Substring(26 + shift, 26 - shift) + template.Substring(26, shift) + "|");
+            //    else Console.WriteLine("|" + template.Substring(26 + shift, Math.Abs(shift)) + template.Substring(0, 26 + shift) + template.Substring(52 + shift, Math.Abs(shift)) + template.Substring(26, 26 + shift) + "|");
+            //}
+            //else
+            //{
+            //    if (shift >= 0) Console.WriteLine("|" + template.Substring(26 - shift, Math.Abs(shift)) + template.Substring(0, 26 - shift) + template.Substring(52 - shift, Math.Abs(shift)) + template.Substring(26, 26 - shift) + "|");
+            //    else Console.WriteLine("|" + template.Substring(Math.Abs(shift), 26 + shift) + template.Substring(0, Math.Abs(shift)) + template.Substring(26 - shift, 26 + shift) + template.Substring(26, Math.Abs(shift)) + "|");
+            //}
             Console.WriteLine("└" + new string('─', 52) + "┘");
         }
 
@@ -201,7 +214,7 @@ namespace Lab4
             {
                 Console.WriteLine(
                     """
-                    Видаляти символи, які не є буквами латинського алфавіту?
+                    Видаляти символи, які не є буквами латинського алфавіту (крім пробілів)?
                     1) Так.
                     2) Ні.
                     """);
@@ -221,7 +234,8 @@ namespace Lab4
         }
 
 
-        public static StringBuilder Additional(ref StringBuilder data)
+
+        public static void Additional(ref StringBuilder data)
         {
             do
             {
@@ -250,7 +264,7 @@ namespace Lab4
                         Additional_3(ref data);
                         break;
                     case 0:
-                        return data;
+                        return;
                     default:
                         Program.ShowProblemMessage();
                         break;
@@ -303,7 +317,7 @@ namespace Lab4
         }
         static void WithRegex(ref StringBuilder data)
         {
-            string[] words = data.ToString().Split();
+            string[] words = data.ToString().Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
             Console.WriteLine("Введіть шаблон:");
             StringBuilder pattern = new StringBuilder(Console.ReadLine()!);
             pattern.Replace('?', '.');
@@ -320,64 +334,65 @@ namespace Lab4
                 }
             }
             if (matchingWords.Count == 0) Console.WriteLine("В рядку немає слів, які задовольняють шаблон!");
-            else Console.WriteLine(string.Join(" ", matchingWords));
+            else
+            {
+                data = new StringBuilder(string.Join(" ", matchingWords));
+                Console.WriteLine($"Слова, що відповідають шаблону: {data}");
+            }
         }
         static void WithoutRegex(ref StringBuilder data)
         {
-            string[] words = data.ToString().Split();
+            string[] words = data.ToString().Split(new[] { ' ', '\t'}, StringSplitOptions.RemoveEmptyEntries);
+
             Console.WriteLine("Введіть шаблон:");
             string pattern = Console.ReadLine()!;
+
             List<string> matchingWords = new List<string>();
 
             foreach (string word in words)
             {
-                int wIndex = 0, pIndex = 0;
-                bool isMatch = true;
-
-                while (wIndex < word.Length && pIndex < pattern.Length)
-                {
-                    if (pattern[pIndex] == '?')
-                    {
-                        wIndex++;
-                        pIndex++;
-                    }
-                    else if (pattern[pIndex] == '*')
-                    {
-                        if (pIndex == pattern.Length - 1)
-                        {
-                            wIndex = word.Length;
-                        }
-                        else
-                        {
-                            pIndex++;
-                            while (wIndex < word.Length && word[wIndex] != pattern[pIndex])
-                            {
-                                wIndex++;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (word[wIndex] != pattern[pIndex])
-                        {
-                            isMatch = false;
-                            break;
-                        }
-                        wIndex++;
-                        pIndex++;
-                    }
-                }
-
-                if (isMatch && wIndex == word.Length && (pIndex == pattern.Length || (pIndex == pattern.Length - 1 && pattern[pIndex] == '*')))
+                if (IsMatchRecursive(word, pattern, 0, 0))
                 {
                     matchingWords.Add(word);
                 }
             }
 
-            if (matchingWords.Count == 0)
-                Console.WriteLine("В рядку немає слів, які задовольняють шаблон!");
+            if (matchingWords.Count == 0) Console.WriteLine("В рядку немає слів, які задовольняють шаблон!");
             else
-                Console.WriteLine(string.Join(" ", matchingWords));
+            {
+                data = new StringBuilder(string.Join(" ", matchingWords));
+                Console.WriteLine($"Слова, що відповідають шаблону: {data}");
+            }
+        }
+        static bool IsMatchRecursive(string word, string pattern, int wordIndex, int patternIndex)
+        {
+            if (patternIndex == pattern.Length)
+            {
+                return wordIndex == word.Length;
+            }
+
+            if (wordIndex == word.Length)
+            {
+                for (int i = patternIndex; i < pattern.Length; i++)
+                {
+                    if (pattern[i] != '*') return false;
+                }
+                return true;
+            }
+
+            if (pattern[patternIndex] == '*')
+            {
+                return IsMatchRecursive(word, pattern, wordIndex, patternIndex + 1) || // '*' як нуль символів
+                       IsMatchRecursive(word, pattern, wordIndex + 1, patternIndex);   // '*' як 1+ символів
+            }
+            else if (pattern[patternIndex] == '?' || pattern[patternIndex] == word[wordIndex])
+            {
+                return IsMatchRecursive(word, pattern, wordIndex + 1, patternIndex + 1);
+            }
+            else
+            {
+                return false;
+            }
         }
 
 
