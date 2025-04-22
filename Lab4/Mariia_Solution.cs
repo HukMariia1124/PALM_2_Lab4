@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.Design;
 using System.Diagnostics;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -145,7 +146,12 @@ namespace Lab4
         static void Task_2_CaesarCipher(ref StringBuilder data, bool Encrypt)
         {
             bool remove = DeleteOrNot();
-            int shift = Shift();
+            Console.WriteLine("Введіть ключ:");
+            int shift;
+            while (!int.TryParse(Console.ReadLine(), out shift))
+            {
+                Program.ShowProblemMessage();
+            }
             const string template = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
             DisplayCipherTemplate(shift, template, Encrypt);
             Console.WriteLine($"Текст до шифрування: {data}");
@@ -213,23 +219,6 @@ namespace Lab4
                 }
             } while (true);
         }
-        static int Shift()
-        {
-            int shift;
-            Console.WriteLine("Введіть ключ:");
-            do
-            {
-                try
-                {
-                    shift = int.Parse(Console.ReadLine()!);
-                    return shift;
-                }
-                catch
-                {
-                    Program.ShowProblemMessage();
-                }
-            } while (true);
-        }
 
 
         public static StringBuilder Additional(ref StringBuilder data)
@@ -258,7 +247,7 @@ namespace Lab4
                         Additional_2(ref data);
                         break;
                     case 3:
-                        //Additional_3(ref data);
+                        Additional_3(ref data);
                         break;
                     case 0:
                         return data;
@@ -281,6 +270,9 @@ namespace Lab4
             else if (cnt != 0) Console.WriteLine("Дужки розставлені НЕ правильно!");
             else Console.WriteLine("Дужки розставлені правильно!");
         }
+
+
+
         static void Additional_2(ref StringBuilder data)
         {
             do
@@ -386,6 +378,188 @@ namespace Lab4
                 Console.WriteLine("В рядку немає слів, які задовольняють шаблон!");
             else
                 Console.WriteLine(string.Join(" ", matchingWords));
+        }
+
+
+
+        public enum Gender { Masculine, Feminine }
+        static readonly string[] OnesMasculine = { "нуль", "один", "два", "три", "чотири", "п'ять", "шість", "сім", "вісім", "дев'ять" };
+        static readonly string[] OnesFeminine = { "нуль", "одна", "дві", "три", "чотири", "п'ять", "шість", "сім", "вісім", "дев'ять" };
+        static readonly string[] Teens = { "десять", "одинадцять", "дванадцять", "тринадцять", "чотирнадцять", "п'ятнадцять", "шістнадцять", "сімнадцять", "вісімнадцять", "дев'ятнадцять" };
+        static readonly string[] Tens = { "", "десять", "двадцять", "тридцять", "сорок", "п'ятдесят", "шістдесят", "сімдесят", "вісімдесят", "дев'яносто" };
+        static readonly string[] Hundreds = { "", "сто", "двісті", "триста", "чотириста", "п'ятсот", "шістсот", "сімсот", "вісімсот", "дев'ятсот" };
+        static readonly string[] ThousandsForms = { "тисяча", "тисячі", "тисяч" };
+        static readonly string[] MillionsForms = { "мільйон", "мільйони", "мільйонів" };
+        static readonly string[] BillionsForms = { "мільярд", "мільярди" };
+
+        static void Additional_3(ref StringBuilder data)
+        {
+            Console.WriteLine("Рядок до опрацювання: " + data);
+            string pattern = @"([0-9]+)\s(м|грн)\b";
+
+            //https://learn.microsoft.com/en-us/dotnet/api/system.text.regularexpressions.matchcollection?view=net-9.0
+            MatchCollection matches = Regex.Matches(data.ToString(), pattern);
+
+            for (int i = matches.Count - 1; i >= 0; i--)
+            {
+                //https://learn.microsoft.com/en-us/dotnet/api/system.text.regularexpressions.match?view=net-9.0 (Example 1)
+                //Групи захоплення дозволяють виділити частини тексту, які відповідають певним підшаблонам у регулярному виразі.
+                //Вони визначаються круглими дужками() у шаблоні регулярного виразу. Кожна група отримує свій індекс, починаючи з 1(група 0 завжди представляє весь збіг).
+                //Наш шаблон має дві групи захоплення:
+                //1. ([0-9]+) — перша група, яка захоплює послідовність цифр(число).
+                //2. (м | грн) — друга група, яка захоплює одиницю вимірювання: "м" або "грн".
+                //Коли виконується метод Regex.Matches, він повертає колекцію об'єктів Match. Кожен об'єкт Match представляє один збіг у тексті.
+                //У цьому об'єкті є властивість Groups, яка містить всі групи захоплення для цього збігу.
+                //Value: Повертає текст, який був захоплений цією групою.
+                Match match = matches[i];
+
+                int number = int.Parse(match.Groups[1].Value);
+                string unit = match.Groups[2].Value;
+                Gender gender = unit.Equals("м") ? Gender.Masculine : Gender.Feminine;
+
+                string numberInWords = ConvertNumberToWords(number, gender);
+                string unitInWords = ConvertUnitToWord(number, gender);
+                string replacement = $"{numberInWords} {unitInWords}";
+
+                data = data.Replace(match.Value, replacement);
+            }
+            Console.WriteLine("Рядок після опрацювання: " + data);
+        }
+        static string ConvertNumberToWords(int number, Gender gender)
+        {
+            if (number == 0) return "нуль";
+
+            StringBuilder words = new StringBuilder();
+            int level = 0; // 0: одиниці, 1: тисячі, 2: мільйони, 3: мільярди
+            while (number > 0)
+            {
+                int chunk = number % 1000;
+                if (chunk > 0)
+                {
+                    string chunkWords = ConvertChunkToWords(chunk, level, gender);
+                    string placeValueWord = PlaceValueWord(chunk, level);
+
+                    if (words.Length > 0)
+                    {
+                        words.Insert(0, " ");
+                    }
+                    if (!string.IsNullOrEmpty(placeValueWord))
+                    {
+                        words.Insert(0, placeValueWord);
+                        words.Insert(0, " ");
+                    }
+                    words.Insert(0, chunkWords);
+                }
+                number /= 1000;
+                level++;
+            }
+            return words.ToString();
+        }
+        static string ConvertChunkToWords(int chunk, int level, Gender gender)
+        {
+            List<string> parts = new List<string>();
+
+            if (level == 1) // Тисячі - жіночий рід
+            {
+                gender = Gender.Feminine;
+            }
+            else if (level > 1) // Мільйони, мільярди - чоловічий рід
+            {
+                gender = Gender.Masculine;
+            }
+
+            int hundredsDigit = chunk / 100;
+            if (hundredsDigit > 0)
+            {
+                parts.Add(Hundreds[hundredsDigit]);
+            }
+
+            int tensAndOnes = chunk % 100;
+            if (tensAndOnes > 0)
+            {
+                if (tensAndOnes < 10)
+                {
+                    parts.Add(gender == Gender.Feminine ? OnesFeminine[tensAndOnes] : OnesMasculine[tensAndOnes]);
+                }
+                else if (tensAndOnes < 20)
+                {
+                    parts.Add(Teens[tensAndOnes - 10]);
+                }
+                else
+                {
+                    parts.Add(Tens[tensAndOnes / 10]);
+                    int unitsDigit = tensAndOnes % 10;
+                    if (unitsDigit > 0)
+                    {
+                        parts.Add(gender == Gender.Feminine ? OnesFeminine[unitsDigit] : OnesMasculine[unitsDigit]);
+                    }
+                }
+            }
+
+            return string.Join(" ", parts);
+        }
+        static string PlaceValueWord(int chunkValue, int level)
+        {
+            if (level == 0) return "";
+
+            string[] forms;
+            switch (level)
+            {
+                case 1: forms = ThousandsForms; break;
+                case 2: forms = MillionsForms; break;
+                case 3: forms = BillionsForms; break;
+                default: return "";
+            }
+
+            int lastDigit = chunkValue % 10;
+            int lastTwoDigits = chunkValue % 100;
+
+            if (lastTwoDigits >= 11 && lastTwoDigits <= 19)
+            {
+                return forms[2];
+            }
+            switch (lastDigit)
+            {
+                case 1: return forms[0];
+                case 2:
+                case 3:
+                case 4: return forms[1];
+                default: return forms[2];
+            }
+        }
+        static string ConvertUnitToWord(int number, Gender gender)
+        {
+            int lastDigit = number % 10;
+            int lastTwoDigits = number % 100;
+
+            bool isTeen = lastTwoDigits >= 11 && lastTwoDigits <= 19;
+
+            if (gender == Gender.Masculine)
+            {
+                if (isTeen) return "метрів";
+                switch (lastDigit)
+                {
+                    //Якщо значення lastDigit дорівнює 2, 3 або 4, виконання перейде до наступного блоку з кодом, тобто return "метри";.
+                    //Це називається fall-through і дозволяє об'єднати кілька умов в один блок коду.
+                    case 1: return "метр";
+                    case 2:
+                    case 3:
+                    case 4: return "метри";
+                    default: return "метрів";
+                }
+            }
+            else
+            {
+                if (isTeen) return "гривень";
+                switch (lastDigit)
+                {
+                    case 1: return "гривня";
+                    case 2:
+                    case 3:
+                    case 4: return "гривні";
+                    default: return "гривень";
+                }
+            }
         }
     }
 }
