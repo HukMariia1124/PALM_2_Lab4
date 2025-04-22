@@ -152,7 +152,7 @@ namespace Lab4
                     str.Remove(i, 1);
 
                 }
-                else i--;
+                i--;
             }
         }
         public static StringBuilder Task_3(ref StringBuilder str)
