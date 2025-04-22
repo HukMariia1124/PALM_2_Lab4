@@ -187,44 +187,18 @@ namespace Lab4
             if (comparing)
                 Console.WriteLine("У виразі німа непарних цифр, які стоять перед знаком +");
         }
-        public static StringBuilder Additional(ref StringBuilder data)
+        public static void Additional(ref StringBuilder data)
         {
-            do
-            {
-                Program.AskForNewString(ref data);
-                Console.WriteLine(
-                    """
-                    ------------------------------------------------------------------------------------------------------------------------
-                                                                    ВИБІР ДОДАТКОВОЇ ЗАДАЧІ
-                    ------------------------------------------------------------------------------------------------------------------------
-                    1) Перевірити, чи правильно в рядку розставлені круглі дужки.
-                    2) Знайдіть у рядку слова, що відповідають заданому шаблону, де '?' - будь-який один символ, а '*' — будь-який підрядок.
-                    3) Замініть у рядку числа перед "м", "грн" на їх словесний еквівалент, узгодивши рід числівника та форму одиниці виміру.
-                    0) Повернутися назад в меню.
-                    """);
-                byte choiceBlock = Program.Choice(3);
+            Program.AskForNewString(ref data);
+            Console.WriteLine(
+                """
+                ------------------------------------------------------------------------------------------------------------------------
+                                                                ДОДАТКОВА ЗАДАЧА 1
+                ------------------------------------------------------------------------------------------------------------------------
+                Перевірити, чи правильно в рядку розставлені круглі дужки.
 
-                switch (choiceBlock)
-                {
-                    case 1:
-                        Additional_1(ref data);
-                        break;
-                    case 2:
-                        Additional_2(ref data);
-                        break;
-                    case 3:
-                        //Additional_3(ref data);
-                        break;
-                    case 0:
-                        return data;
-                    default:
-                        Program.ShowProblemMessage();
-                        break;
-                }
-            } while (true);
-        }
-        static void Additional_1(ref StringBuilder data)
-        {
+                """);
+
             int cnt = 0;
 
             for (int i = 0; i < data.Length; i++)
@@ -233,14 +207,11 @@ namespace Lab4
                     cnt++;
                 else if (data[i] == ')')
                     cnt--;
+                if (cnt < 0) break;
             }
             if (!data.ToString().Contains('(') && !data.ToString().Contains(')')) Console.WriteLine("В рядку немає дужок");
             else if (cnt != 0) Console.WriteLine("Дужки розставлені неправильно");
             else Console.WriteLine("Дужки розставлені правильно");
-        }
-        static void Additional_2 (ref StringBuilder data)
-        {
-
         }
     }
 }
