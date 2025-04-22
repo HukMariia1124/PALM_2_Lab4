@@ -125,7 +125,7 @@ namespace Lab4
                     0) Повернутися назад в меню.
                     """);
 
-                byte choiceBlock = Program.Choice(4);
+                byte choiceBlock = Program.Choice(2);
 
                 switch (choiceBlock)
                 {
