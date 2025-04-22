@@ -145,8 +145,15 @@ namespace Lab4
         static void Task_2_CaesarCipher(ref StringBuilder data, bool Encrypt)
         {
             bool remove = DeleteOrNot();
-            Console.WriteLine("Введіть ключ:");
-            int shift = int.Parse(Console.ReadLine()!);
+            int shift;
+            do
+            {
+                Console.WriteLine("Введіть ключ (цифру):");
+                if (int.TryParse(Console.ReadLine(), out shift))
+                    break;
+                else
+                    Program.ShowProblemMessage();
+            } while (true);
             const string template = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
             Console.WriteLine($"Текст до шифрування: {data}");
             for (int i = 0; i < data.Length; i++)
@@ -156,7 +163,7 @@ namespace Lab4
                 {
                     if (Encrypt)
                     {
-                        if (index < 26 && index + shift>=0) data[i] = template[(index + shift) % 26];
+                        if (index < 26 && index + shift >= 0) data[i] = template[(index + shift) % 26];
                         else data[i] = template[(index + shift) % 26 + 26];
                     }
                     else
