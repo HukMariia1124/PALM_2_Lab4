@@ -176,7 +176,7 @@ namespace Lab4
                         else data[i] = template[(index - shift) % 26 + 26];
                     }
                 }
-                else if (remove == true && data[i]!=' ') data.Remove(i--, 1);
+                else if (remove && data[i]!=' ') data.Remove(i--, 1);
             }
             Console.WriteLine($"Текст після шифрування: {data}");
         }
