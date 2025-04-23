@@ -147,12 +147,16 @@ namespace Lab4
         static void Task_2_CaesarCipher(ref StringBuilder data, bool Encrypt)
         {
             bool remove = DeleteOrNot();
-            Console.WriteLine("Введіть ключ:");
             int shift;
-            while (!int.TryParse(Console.ReadLine(), out shift))
+            do
             {
-                Program.ShowProblemMessage();
-            }
+                Console.WriteLine("Введіть ключ (цифру):");
+                if (int.TryParse(Console.ReadLine(), out shift))
+                    break;
+                else
+                    Program.ShowProblemMessage();
+            } while (true);
+
             const string template = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
             DisplayCipherTemplate(shift, template, Encrypt);
             Console.WriteLine($"Текст до шифрування: {data}");

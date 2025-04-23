@@ -48,7 +48,7 @@ namespace Lab4
                         Jenlast_Solution.Task_1();
                         break;
                     case 4:
-                        MakscoldSolution.Task_2();
+                        data = MakscoldSolution.Task_2(ref data);
                         break;
                     case 5:
                         MariiaSolution.Task_2_Form_12(ref data);
@@ -57,7 +57,7 @@ namespace Lab4
                         Jenlast_Solution.Task_2_Form_7(ref data);
                         break;
                     case 7:
-                        MakscoldSolution.Task_3();
+                        data = MakscoldSolution.Task_3(ref data);
                         break;
                     case 8:
                         MariiaSolution.Additional(ref data);
@@ -71,7 +71,7 @@ namespace Lab4
                         ShowProblemMessage();
                         break;
                 }
-            } while (choiceBlock!=0);
+            } while (choiceBlock != 0);
         }
         public static byte Choice(byte countOfBlocks = 9)
         {

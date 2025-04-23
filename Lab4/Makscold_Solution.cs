@@ -110,18 +110,19 @@ namespace Lab4
             }
             Console.WriteLine(str);
         }
-        public static void Task_2()
+        public static StringBuilder Task_2(ref StringBuilder str)
         {/* Відомо, що у рядку є латинські (англійські) букви і цифри. Перетворити рядок так, щоб спочатку
             розміщувалися цифри у прямому порядку, а потім літери у зворотному порядку. Якщо рядок містив
             також інші символи(не букви й не цифри), їх слід пропустити(видалити).*/
 
-            Console.WriteLine($"Введіть рядок");
-            var str = new StringBuilder(Console.ReadLine());
+            Program.AskForNewString(ref str);
 
             DaleteSimvol(str);
             RearrangeSmart(str);
 
+            Console.WriteLine("Відсортований рядок:");
             Console.Error.WriteLine(str);
+            return str;
         }
         static bool IsLetter(char c) => (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
         static bool IsDigit(char c) => (c >= '0' && c <= '9');
@@ -151,10 +152,10 @@ namespace Lab4
                     str.Remove(i, 1);
 
                 }
-                else i--;
+                i--;
             }
         }
-        public static void Task_3()
+        public static StringBuilder Task_3(ref StringBuilder str)
         {
             do
             {
@@ -173,8 +174,7 @@ namespace Lab4
 
                 byte choiceBlock = Program.Choice(3);
 
-                Console.WriteLine($"Введіть рядок");
-                var str = Console.ReadLine();
+                Program.AskForNewString(ref str);
 
                 switch (choiceBlock)
                 {
@@ -188,19 +188,19 @@ namespace Lab4
                         Task_3_Version_3(str);
                         break;
                     case 0:
-                        return;
+                        return str;
                     default:
                         Program.ShowProblemMessage();
                         break;
                 }
             } while (true);
         }
-        static void Task_3_Version_1(string str)
+        static void Task_3_Version_1(StringBuilder str)
         {
             //Перевірити, чи правильно розставлені круглі дужки.
             int count = 0;
             bool result = true;
-            foreach (char c in str)
+            foreach (char c in str.ToString())
             {
                 if (c == '(') count++;
                 else if (c == ')') count--;
@@ -215,9 +215,12 @@ namespace Lab4
             if (count != 0) result = false;
             Console.WriteLine(result);
         }
-        static void Task_3_Version_2(string str)
+        static void Task_3_Version_2(StringBuilder str)
         {
-            string[] words = str.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+            StringBuilder[] words = str.ToString()
+               .Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries)
+               .Select(word => new StringBuilder(word))
+               .ToArray();
 
             Console.WriteLine("Введіть шаблон");
 
@@ -275,57 +278,9 @@ namespace Lab4
             Console.WriteLine(String.Join(' ', result));
 
         }
-        static void Task_3_Version_3(string str)
+        static void Task_3_Version_3(StringBuilder str)
         {
             Program.ShowProblemMessage(); return;
-
-            /*string[] words = str.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-
-
-
-
-            for (int i = 0; i < words.Length; i++)
-            {
-                if (words[i] == "м" && i != 0)
-                {
-                    words[i - 1] = Meter(words[i - 1]);
-                }
-                if (words[i] == "грн" && i != 0)
-                {
-                    words[i - 1] = Hryvnia(words[i - 1]);
-                }
-            }
-
-            static string Meter(string str)
-            {
-                try
-                {
-                    int number = int.Parse(str);
-                }
-                catch { return str; }
-                string result = "";
-
-                for (int i = str.Length - 1; i > 0; i--)
-                {
-
-                }
-
-                return result;
-            }
-            static string Hryvnia(string str)
-            {
-                try
-                {
-                    int number = int.Parse(str);
-                }
-                catch { return str; }
-                string result = "";
-
-
-
-                return result;
-            }*/
-
         }
     }
 }
